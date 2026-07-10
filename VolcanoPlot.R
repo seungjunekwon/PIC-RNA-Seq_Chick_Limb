@@ -13,13 +13,13 @@ v$log_padj <- -log10(v$padj)
 
 # Define labeled genes and their colors
 label_colors <- c(
-  ALDH1A2 = "#61CBF4", RDH10   = "#61CBF4", OSR1    = "#61CBF4", 
+  ALDH1A2 = "#61CBF4", RDH10   = "#61CBF4",
   LIN28A  = "#61CBF4", TRIM71  = "#61CBF4", MEOX1   = "#61CBF4", 
-  HOXB8   = "#61CBF4", LFNG    = "#61CBF4",
+  HOXB8   = "#61CBF4", LFNG    = "#61CBF4", PRTG    = "#61CBF4", 
   
   FGF10   = "#215F9A", WNT5A   = "#215F9A", GREM1   = "#215F9A", 
   HOXD11  = "#215F9A", GLI3    = "#215F9A", DUSP6   = "#215F9A", 
-  RSPO2   = "#215F9A", SP8     = "#215F9A", SPRY2   = "#215F9A", 
+  RSPO2   = "#215F9A", SPRY2   = "#215F9A", 
   HOXD10  = "#215F9A", HOXD9   = "#215F9A", HOXD12  = "#215F9A", 
   HOXA10  = "#215F9A", HOXA11  = "#215F9A"
 )
@@ -45,7 +45,7 @@ b <- ggplot(v, aes(x = fc, y = log_padj)) +
   geom_text_repel(data = subset(v, !is.na(label)),
                   aes(label = paste0("italic('", gene, "')")),
                   parse = TRUE, 
-                  size = 7.5,
+                  size = 7,
                   family = "Arial",
                   max.overlaps = Inf,
                   box.padding = 0.7,     
@@ -59,7 +59,6 @@ b <- ggplot(v, aes(x = fc, y = log_padj)) +
   ylab("-log10 padj") +
   scale_fill_identity() +
   
-  # REMOVED coord_cartesian() so the full axis is restored naturally
   
   theme_minimal(base_family = "Arial") +
   theme(
@@ -72,4 +71,4 @@ b <- ggplot(v, aes(x = fc, y = log_padj)) +
   )
 
 # Save high-res plot
-ggsave("volcano_fixed.png", plot = b, width = 22, height = 20, dpi = 300, units = "cm")
+ggsave("volcano.png", plot = b, width = 22, height = 20, dpi = 300, units = "cm")
