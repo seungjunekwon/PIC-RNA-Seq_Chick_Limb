@@ -23,21 +23,18 @@ data_long <- dat %>%
 stage_colors <- c("HH14" = "#61CBF4", "HH19" = "#215F9A")
 
 #---------------------------------------------------------
-# PANEL 1: HH14-Upregulated Genes
+# PANEL 1: HH14-Upregulated Genes (5 Genes, 1 Row)
 #---------------------------------------------------------
 
 hh14_genes <- data_long %>%
-  filter(gene %in% c("ALDH1A2", "RDH10", "LIN28A", "TRIM71", "OSR1", "MEOX1", "LFNG", "HOXB8")) %>%
-  mutate(gene = factor(gene, levels = c(
-    "ALDH1A2", "RDH10", "LIN28A", "TRIM71", # Row 1
-    "OSR1", "MEOX1", "LFNG", "HOXB8"        # Row 2
-  )))
+  filter(gene %in% c("ALDH1A2", "PRTG", "LIN28A", "TRIM71", "HOXB8")) %>%
+  mutate(gene = factor(gene, levels = c("ALDH1A2", "PRTG", "LIN28A", "TRIM71", "HOXB8")))
 
 plot_hh14 <- ggplot(hh14_genes, aes(x = stage, y = Normalized_Expression, fill = stage)) +
   geom_boxplot(outlier.shape = NA, width = 0.5, color = "black", alpha = 0.8) +
   geom_jitter(aes(color = stage), position = position_jitter(0.15), size = 1.8, alpha = 0.9) +
-  # Force x-axes onto all individual panels using axes = "all"
-  facet_wrap(~gene, nrow = 2, scales = "free_y", axes = "all") + 
+  # Force exactly 1 row using nrow = 1
+  facet_wrap(~gene, nrow = 1, scales = "free_y", axes = "all") + 
   scale_fill_manual(values = stage_colors) +
   scale_color_manual(values = c("HH14" = "#3fa5cc", "HH19" = "#133f6b")) + 
   theme_minimal(base_family = "Arial") +
@@ -55,24 +52,22 @@ plot_hh14 <- ggplot(hh14_genes, aes(x = stage, y = Normalized_Expression, fill =
   ) +
   labs(y = "Normalized Expression")
 
-ggsave("HH14_upregulated.png", plot = plot_hh14, width = 20, height = 11, dpi = 300, units = "cm")
+# Saved with custom dimensions optimized for a single wide row of 5 plots
+ggsave("HH14_upregulated.png", plot = plot_hh14, width = 24, height = 6.5, dpi = 300, units = "cm")
 
 #---------------------------------------------------------
-# PANEL 2: HH19-Upregulated Genes
+# PANEL 2: HH19-Upregulated Genes (5 Genes, 1 Row)
 #---------------------------------------------------------
 
 hh19_genes <- data_long %>%
-  filter(gene %in% c("FGF10", "WNT5A", "GREM1", "DUSP6", "SP8", "GLI3", "RSPO2", "HOXD11")) %>%
-  mutate(gene = factor(gene, levels = c(
-    "FGF10", "WNT5A", "GREM1", "DUSP6",   # Row 1
-    "SP8", "GLI3", "RSPO2", "HOXD11"       # Row 2
-  )))
+  filter(gene %in% c("FGF10", "GREM1", "GLI3", "HOXA11", "HOXD11")) %>%
+  mutate(gene = factor(gene, levels = c("FGF10", "GREM1", "GLI3", "HOXA11", "HOXD11")))
 
 plot_hh19 <- ggplot(hh19_genes, aes(x = stage, y = Normalized_Expression, fill = stage)) +
   geom_boxplot(outlier.shape = NA, width = 0.5, color = "black", alpha = 0.8) +
   geom_jitter(aes(color = stage), position = position_jitter(0.15), size = 1.8, alpha = 0.9) +
-  # Force x-axes onto all individual panels using axes = "all"
-  facet_wrap(~gene, nrow = 2, scales = "free_y", axes = "all") + 
+  # Force exactly 1 row using nrow = 1
+  facet_wrap(~gene, nrow = 1, scales = "free_y", axes = "all") + 
   scale_fill_manual(values = stage_colors) +
   scale_color_manual(values = c("HH14" = "#3fa5cc", "HH19" = "#133f6b")) +
   theme_minimal(base_family = "Arial") +
@@ -90,4 +85,5 @@ plot_hh19 <- ggplot(hh19_genes, aes(x = stage, y = Normalized_Expression, fill =
   ) +
   labs(y = "Normalized Expression")
 
-ggsave("HH19_upregulated.png", plot = plot_hh19, width = 20, height = 11, dpi = 300, units = "cm")
+# Saved with custom dimensions optimized for a single wide row of 5 plots
+ggsave("HH19_upregulated.png", plot = plot_hh19, width = 24, height = 6.5, dpi = 300, units = "cm")
